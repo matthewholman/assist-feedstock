@@ -1,19 +1,18 @@
 {% set name = "assist" %}
-{% set version = "1.1.11" %}
-{% set sha256 = "236ff5a752b16e911416656edf1057688c991d164a7a3e53163405b1c3020509" %}
+{% set version = "1.2.3" %}
+{% set sha256 = "caed35a09f64afb537045cd6a2e262dc71a43b3aefe92aacf2303b00c7fec589" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  #path: /Users/mjuric/projects/github.com/mjuric/assist
-  url: https://github.com/mjuric/assist/archive/refs/tags/v{{ version }}.tar.gz
+  # Source from the PyPI sdist (the mjuric/assist fork has no 1.2.x tag).
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  # curl -L https://github.com/mjuric/assist/archive/refs/tags/v1.1.5.tar.gz | openssl sha256
 
 build:
-  number: 3
+  number: 0
   skip: True  # [win]
   script:
   - |
@@ -39,7 +38,7 @@ requirements:
     - python                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     - numpy                                  # [build_platform != target_platform]
-    - rebound ==4.4.11                       # [build_platform != target_platform]
+    - rebound ==4.5.0                        # [build_platform != target_platform]
     - {{ compiler('c') }}
     - {{ stdlib('c') }}
   host:
@@ -47,11 +46,11 @@ requirements:
     - setuptools
     - wheel
     - numpy
-    - rebound ==4.4.11
+    - rebound ==4.5.0
     - pip
   run:
     - python
-    - rebound ==4.4.11
+    - rebound ==4.5.0
 
 test:
   imports:
